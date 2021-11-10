@@ -3,17 +3,17 @@ public class InvoiceGenerator {
     private static final double MINIMUM_COST_PER_KILOMETER = 10;
     private static final int MINIMUM_FARE = 5;
 
-    public double CalculateFare(double distance,int time){
+
+
+    public static double calculateFare(double distance, int time){
         double totalDistance = distance * MINIMUM_COST_PER_KILOMETER  + time * COST_PER_TIME;
-        if (totalDistance < MINIMUM_FARE)
-            return MINIMUM_FARE;
-        return totalDistance;
+        return totalDistance < MINIMUM_FARE ? MINIMUM_FARE : totalDistance;
     }
-    public double CalculateFare(Ride[] rides){
+    public static InvoiceSummary calculateFare(Ride[] rides){
         double totalFare = 0;
         for(Ride ride:rides) {
-            totalFare += this.CalculateFare(ride.distance, ride.time);
+            totalFare += calculateFare(ride.distance, ride.time);
         }
-        return totalFare;
+        return new InvoiceSummary(rides.length, totalFare);
     }
 }
